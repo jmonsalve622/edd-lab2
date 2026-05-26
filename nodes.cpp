@@ -1,5 +1,7 @@
 #include "nodes.h"
 
+// Implementación de InfoNode
+
 template <typename T>
 InfoNode<T>::InfoNode(const T& i) : info(i) {}
 
@@ -11,6 +13,10 @@ const T& InfoNode<T>::getInfo() const {
 template class InfoNode<std::string>;
 template class InfoNode<int>;
 template class InfoNode<double>;
+
+// Implementación de SimilarBookNode
+
+SimilarBookNode::SimilarBookNode(const std::string& t, int i, int y) : title(t), isbn(i), year(y) {}
 
 const InfoNode<std::string>& SimilarBookNode::getTitle() const {
     return title;
@@ -24,6 +30,14 @@ const InfoNode<int>& SimilarBookNode::getYear() const {
     return year;
 }
 
+// Implementación de SimilarsBooksNode
+
+SimilarsBooksNode::SimilarsBooksNode() {}
+
+void SimilarsBooksNode::addSimilar(const SimilarBookNode& similar) {
+    similars.push_back(similar);
+}
+
 const std::vector<SimilarBookNode>& SimilarsBooksNode::getSimilars() const {
     return similars;
 }
@@ -31,6 +45,14 @@ const std::vector<SimilarBookNode>& SimilarsBooksNode::getSimilars() const {
 std::vector<SimilarBookNode>& SimilarsBooksNode::getSimilars() {
     return similars;
 }
+
+// Implementación de BookNode
+
+BookNode::BookNode(const InfoNode<int>& id, const InfoNode<int>& isbn, const InfoNode<int>& year,
+                   const InfoNode<std::string>& languange, const InfoNode<std::string>& description,
+                   const InfoNode<double>& avg_rating, const InfoNode<int>& num_pages)
+    : id(id), isbn(isbn), year(year), languange(languange), description(description),
+      avg_rating(avg_rating), num_pages(num_pages) {}
 
 const InfoNode<int>& BookNode::getId() const {
     return id;
@@ -72,7 +94,10 @@ const std::vector<BookNode>& RootNode::getBooks() const {
     return books;
 }
 
+// Implementación de RootNode
+
+RootNode::RootNode() {}
+
 std::vector<BookNode>& RootNode::getBooks() {
     return books;
 }
-

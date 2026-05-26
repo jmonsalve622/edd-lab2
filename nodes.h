@@ -1,3 +1,6 @@
+#ifndef NODES_H
+#define NODES_H
+
 #include <vector>
 #include <iostream>
 #include <string>
@@ -22,6 +25,7 @@ class SimilarBookNode : public Node {
         InfoNode<int> isbn;
         InfoNode<int> year;
     public:
+        SimilarBookNode(const std::string& t, int i, int y);
         const InfoNode<std::string>& getTitle() const;
         const InfoNode<int>& getIsbn() const;
         const InfoNode<int>& getYear() const;
@@ -31,6 +35,8 @@ class SimilarsBooksNode : public Node {
     private:
         std::vector<SimilarBookNode> similars;
     public:
+        SimilarsBooksNode();
+        void addSimilar(const SimilarBookNode& similar);
         const std::vector<SimilarBookNode>& getSimilars() const;
         std::vector<SimilarBookNode>& getSimilars();
 };
@@ -46,6 +52,9 @@ class BookNode : public Node {
         InfoNode<int> num_pages;
         SimilarsBooksNode similars;
     public:
+        BookNode(const InfoNode<int>& id, const InfoNode<int>& isbn, const InfoNode<int>& year,
+                 const InfoNode<std::string>& languange, const InfoNode<std::string>& description,
+                 const InfoNode<double>& avg_rating, const InfoNode<int>& num_pages);
         const InfoNode<int>& getId() const;
         const InfoNode<int>& getIsbn() const;
         const InfoNode<int>& getYear() const;
@@ -61,6 +70,9 @@ class RootNode : public Node {
     private:
         std::vector<BookNode> books;
     public:
+        RootNode();
         const std::vector<BookNode>& getBooks() const;
         std::vector<BookNode>& getBooks();
 };
+
+#endif
