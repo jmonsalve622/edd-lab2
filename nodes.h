@@ -5,13 +5,8 @@
 #include <iostream>
 #include <string>
 
-class Node {
-    public:
-        virtual ~Node() {}
-};
-
 template <typename T>
-class InfoNode : public Node {
+class InfoNode {
     private:
         T info;
     public:
@@ -19,7 +14,7 @@ class InfoNode : public Node {
         const T& getInfo() const;
 };
 
-class SimilarBookNode : public Node {
+class SimilarBookNode {
     private:
         InfoNode<std::string> title;
         InfoNode<int> isbn;
@@ -31,7 +26,7 @@ class SimilarBookNode : public Node {
         const InfoNode<int>& getYear() const;
 };
 
-class SimilarsBooksNode : public Node {
+class SimilarsBooksNode {
     private:
         std::vector<SimilarBookNode> similars;
     public:
@@ -41,7 +36,7 @@ class SimilarsBooksNode : public Node {
         std::vector<SimilarBookNode>& getSimilars();
 };
 
-class BookNode : public Node {
+class BookNode {
     private:
         InfoNode<int> id;
         InfoNode<int> isbn;
@@ -66,7 +61,7 @@ class BookNode : public Node {
         SimilarsBooksNode& getSimilars();
 };
 
-class RootNode : public Node {
+class RootNode {
     private:
         std::vector<BookNode> books;
     public:
