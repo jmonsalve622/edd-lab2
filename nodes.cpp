@@ -48,14 +48,18 @@ std::vector<SimilarBookNode>& SimilarsBooksNode::getSimilars() {
 
 // Implementación de BookNode
 
-BookNode::BookNode(int id, int isbn, int year,
+BookNode::BookNode(int id, const std::string& title, int isbn, int year,
                    const std::string& languange, const std::string& description,
                    double avg_rating, int num_pages)
-    : id(id), isbn(isbn), year(year), languange(languange), description(description),
+    : id(id), title(title), isbn(isbn), year(year), languange(languange), description(description),
       avg_rating(avg_rating), num_pages(num_pages) {}
 
 const InfoNode<int>& BookNode::getId() const {
     return id;
+}
+
+const InfoNode<std::string>& BookNode::getTitle() const {
+    return title;
 }
 
 const InfoNode<int>& BookNode::getIsbn() const {
@@ -88,6 +92,17 @@ const SimilarsBooksNode& BookNode::getSimilars() const {
 
 SimilarsBooksNode& BookNode::getSimilars() {
     return similars;
+}
+
+void BookNode::print() const {
+    std::cout << "- ID: " << id.getInfo() << "\n";
+    std::cout << "- Title: " << title.getInfo() << "\n";
+    std::cout << "- ISBN: " << isbn.getInfo() << "\n";
+    std::cout << "- Year: " << year.getInfo() << "\n";
+    std::cout << "- Language: " << languange.getInfo() << "\n";
+    std::cout << "- Description: " << description.getInfo() << "\n";
+    std::cout << "- Avg Rating: " << avg_rating.getInfo() << "\n";
+    std::cout << "- Num Pages: " << num_pages.getInfo() << "\n";
 }
 
 const std::vector<BookNode>& RootNode::getBooks() const {

@@ -1,4 +1,4 @@
-// Compilar con: g++ -std=c++17 main.cpp tinyxml2.cpp nodes.cpp tree.cpp -o test 
+// Compilar con: g++ -std=c++17 main.cpp tinyxml2.cpp nodes.cpp tree.cpp -o test
 
 #include <iostream>
 #include <filesystem>
@@ -9,14 +9,17 @@
 BookNode xmlToBookNode(const tinyxml2::XMLDocument* doc) {
     const tinyxml2::XMLElement* bookElement = doc->FirstChildElement("GoodreadsResponse")->FirstChildElement("book");
     int id = bookElement->FirstChildElement("id")->IntText();
+    std::string title = bookElement->FirstChildElement("title")->GetText();
     int isbn = bookElement->FirstChildElement("isbn")->IntText();
     int year = bookElement->FirstChildElement("publication_year")->IntText();
     std::string language = bookElement->FirstChildElement("language_code")->GetText();
     std::string description = bookElement->FirstChildElement("description")->GetText();
     double avg_rating = bookElement->FirstChildElement("average_rating")->DoubleText();
     int num_pages = bookElement->FirstChildElement("num_pages")->IntText();
-    
-    BookNode bookNode(id, isbn, year, language, description, avg_rating, num_pages);
+
+    BookNode bookNode(id, title, isbn, year, language, description, avg_rating, num_pages);
+
+    // Falta agregar los libros similares al bookNode
 
     return bookNode;
 }
@@ -34,6 +37,9 @@ int main() {
         return 1;
         }
         std::cout << "Archivo cargado correctamente\n";
+        BookNode bookNode = xmlToBookNode(&doc);
+        bookNode.print();
+        tree.addBook(bookNode);
     }
     return 0;
 }

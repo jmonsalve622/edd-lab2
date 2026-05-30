@@ -39,6 +39,7 @@ class SimilarsBooksNode {
 class BookNode {
     private:
         InfoNode<int> id;
+        InfoNode<std::string> title;
         InfoNode<int> isbn;
         InfoNode<int> year;
         InfoNode<std::string> languange;
@@ -47,10 +48,11 @@ class BookNode {
         InfoNode<int> num_pages;
         SimilarsBooksNode similars;
     public:
-        BookNode(int id, int isbn, int year,
+        BookNode(int id, const std::string& title, int isbn, int year,
                  const std::string& languange, const std::string& description,
                  double avg_rating, int num_pages);
         const InfoNode<int>& getId() const;
+        const InfoNode<std::string>& getTitle() const;
         const InfoNode<int>& getIsbn() const;
         const InfoNode<int>& getYear() const;
         const InfoNode<std::string>& getLanguange() const;
@@ -59,6 +61,7 @@ class BookNode {
         const InfoNode<int>& getNumPages() const;
         const SimilarsBooksNode& getSimilars() const;
         SimilarsBooksNode& getSimilars();
+        void print() const;
 };
 
 class RootNode {
