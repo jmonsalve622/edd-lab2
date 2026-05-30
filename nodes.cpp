@@ -48,9 +48,9 @@ std::vector<SimilarBookNode>& SimilarsBooksNode::getSimilars() {
 
 // Implementación de BookNode
 
-BookNode::BookNode(const InfoNode<int>& id, const InfoNode<int>& isbn, const InfoNode<int>& year,
-                   const InfoNode<std::string>& languange, const InfoNode<std::string>& description,
-                   const InfoNode<double>& avg_rating, const InfoNode<int>& num_pages)
+BookNode::BookNode(int id, int isbn, int year,
+                   const std::string& languange, const std::string& description,
+                   double avg_rating, int num_pages)
     : id(id), isbn(isbn), year(year), languange(languange), description(description),
       avg_rating(avg_rating), num_pages(num_pages) {}
 

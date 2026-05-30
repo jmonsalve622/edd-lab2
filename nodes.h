@@ -47,9 +47,9 @@ class BookNode {
         InfoNode<int> num_pages;
         SimilarsBooksNode similars;
     public:
-        BookNode(const InfoNode<int>& id, const InfoNode<int>& isbn, const InfoNode<int>& year,
-                 const InfoNode<std::string>& languange, const InfoNode<std::string>& description,
-                 const InfoNode<double>& avg_rating, const InfoNode<int>& num_pages);
+        BookNode(int id, int isbn, int year,
+                 const std::string& languange, const std::string& description,
+                 double avg_rating, int num_pages);
         const InfoNode<int>& getId() const;
         const InfoNode<int>& getIsbn() const;
         const InfoNode<int>& getYear() const;
