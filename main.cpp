@@ -7,15 +7,46 @@
 #include "tree.h"
 
 BookNode xmlToBookNode(const tinyxml2::XMLDocument* doc) {
-    const tinyxml2::XMLElement* bookElement = doc->FirstChildElement("GoodreadsResponse")->FirstChildElement("book");
-    int id = bookElement->FirstChildElement("id")->IntText();
-    std::string title = bookElement->FirstChildElement("title")->GetText();
-    int isbn = bookElement->FirstChildElement("isbn")->IntText();
-    int year = bookElement->FirstChildElement("publication_year")->IntText();
-    std::string language = bookElement->FirstChildElement("language_code")->GetText();
-    std::string description = bookElement->FirstChildElement("description")->GetText();
-    double avg_rating = bookElement->FirstChildElement("average_rating")->DoubleText();
-    int num_pages = bookElement->FirstChildElement("num_pages")->IntText();
+
+    //valores por defecto en caso de que un libro tenga algun valor null
+    int id = 0;
+    std::string title = "";
+    int isbn = 0;
+    int year = 0;
+    std::string language = "";
+    std::string description = "";
+    double avg_rating = 0.0;
+    int num_pages = 0;
+
+    const tinyxml2::XMLElement* rootElement = doc->FirstChildElement("GoodreadsResponse");
+    const tinyxml2::XMLElement* bookElement = nullptr;
+    
+    if (rootElement) {
+        bookElement = rootElement->FirstChildElement("book");
+    }
+
+    //extraemos los datos reales del libro, en caso de que un libro no tenga algun valor, quedara con el valor predeterminado
+    if (bookElement) {
+        const tinyxml2::XMLElement* elem;
+
+        elem = bookElement->FirstChildElement("id");
+        if (elem) elem->QueryIntText(&id);
+        elem = bookElement->FirstChildElement("isbn");
+        if (elem) elem->QueryIntText(&isbn);
+        elem = bookElement->FirstChildElement("publication_year");
+        if (elem) elem->QueryIntText(&year);
+        elem = bookElement->FirstChildElement("average_rating");
+        if (elem) elem->QueryDoubleText(&avg_rating);
+        elem = bookElement->FirstChildElement("num_pages");
+        if (elem) elem->QueryIntText(&num_pages);
+        
+        elem = bookElement->FirstChildElement("title");
+        if (elem && elem->GetText()) title = elem->GetText();
+        elem = bookElement->FirstChildElement("language_code");
+        if (elem && elem->GetText()) language = elem->GetText();
+        elem = bookElement->FirstChildElement("description");
+        if (elem && elem->GetText()) description = elem->GetText();
+    }
 
     BookNode bookNode(id, title, isbn, year, language, description, avg_rating, num_pages);
 
@@ -41,5 +72,9 @@ int main() {
         bookNode.print();
         tree.addBook(bookNode);
     }
+
+    //imprime la cantidad de libros leidos
+    std::cout << "Total de libros leidos: " << tree.contarLibros() << "\n";
+
     return 0;
 }

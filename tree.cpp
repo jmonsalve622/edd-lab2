@@ -28,3 +28,7 @@ void Tree::borrar_ratings(double r) {
 void Tree::precursores(int id) {
     // Implementar la función para listar los precursores de un libro dado su id
 }
+
+int Tree::contarLibros() {
+    return root.getBooks().size();
+}

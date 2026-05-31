@@ -15,6 +15,8 @@ class Tree {
         void listar();
         void borrar_ratings(double r);
         void precursores(int id);
+        int contarLibros(); 
 };
+
 
 #endif
