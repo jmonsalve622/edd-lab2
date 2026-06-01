@@ -8,7 +8,7 @@
 
 BookNode xmlToBookNode(const tinyxml2::XMLDocument* doc) {
 
-    //valores por defecto en caso de que un libro tenga algun valor null
+    // Valores por defecto en caso de que un libro tenga algun valor null
     int id = 0;
     std::string title = "";
     int isbn = 0;
@@ -25,7 +25,7 @@ BookNode xmlToBookNode(const tinyxml2::XMLDocument* doc) {
         bookElement = rootElement->FirstChildElement("book");
     }
 
-    //extraemos los datos reales del libro, en caso de que un libro no tenga algun valor, quedara con el valor predeterminado
+    // Extraemos los datos reales del libro, en caso de que un libro no tenga algun valor, quedara con el valor predeterminado
     if (bookElement) {
         const tinyxml2::XMLElement* elem;
 
@@ -73,7 +73,7 @@ int main() {
         tree.addBook(bookNode);
     }
 
-    //imprime la cantidad de libros leidos
+    // Imprime la cantidad de libros leidos
     std::cout << "Total de libros leidos: " << tree.contarLibros() << "\n";
 
     return 0;
