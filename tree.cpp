@@ -30,8 +30,13 @@ void Tree::precursores() {
     for (const auto& book : root.getBooks()) {
         condition = true;
         bookYear = book.getYear().getInfo();
+
+        if (bookYear == 0 || book.getSimilars().getSimilars().empty()) {
+            continue;
+        }
+
         for (const auto& similar : book.getSimilars().getSimilars()) {
-            if (similar.getYear().getInfo() < bookYear) {
+            if (similar.getYear().getInfo() <= bookYear) {
                 condition = false;
                 break;
             }

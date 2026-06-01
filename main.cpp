@@ -24,7 +24,9 @@ BookNode xmlToBookNode(const tinyxml2::XMLDocument* doc) {
     
     if (rootElement) {
         bookElement = rootElement->FirstChildElement("book");
-        similarsElement = rootElement->FirstChildElement("similar_books");
+        if (bookElement) {
+            similarsElement = bookElement->FirstChildElement("similar_books"); 
+        }
     }
 
     // Extraemos los datos reales del libro, en caso de que un libro no tenga algun valor, quedara con el valor predeterminado
