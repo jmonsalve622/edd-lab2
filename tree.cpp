@@ -26,6 +26,7 @@ void Tree::borrar_ratings(double r) {
 void Tree::precursores() {
     bool condition = true;
     int bookYear = 0;
+    int count = 0;
     for (const auto& book : root.getBooks()) {
         condition = true;
         bookYear = book.getYear().getInfo();
@@ -37,8 +38,10 @@ void Tree::precursores() {
         }
         if (condition) {
             std::cout << "ID: " << book.getId().getInfo() << "\n";
+            count++;
         }
     }
+    std::cout << "Total de libros precursores: " << count << "\n";
 }
 
 int Tree::contarLibros() {

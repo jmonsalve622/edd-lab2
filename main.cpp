@@ -20,9 +20,11 @@ BookNode xmlToBookNode(const tinyxml2::XMLDocument* doc) {
 
     const tinyxml2::XMLElement* rootElement = doc->FirstChildElement("GoodreadsResponse");
     const tinyxml2::XMLElement* bookElement = nullptr;
+    const tinyxml2::XMLElement* similarsElement = nullptr;
     
     if (rootElement) {
         bookElement = rootElement->FirstChildElement("book");
+        similarsElement = rootElement->FirstChildElement("similar_books");
     }
 
     // Extraemos los datos reales del libro, en caso de que un libro no tenga algun valor, quedara con el valor predeterminado
@@ -50,8 +52,29 @@ BookNode xmlToBookNode(const tinyxml2::XMLDocument* doc) {
 
     BookNode bookNode(id, title, isbn, year, language, description, avg_rating, num_pages);
 
-    // Falta agregar los libros similares al bookNode
+    // Se agregan los libros similares al libro principal, en caso de que existan
+    
+    if (similarsElement) {
+        const tinyxml2::XMLElement* similarBookElement = similarsElement->FirstChildElement("book");
+        while (similarBookElement) {
+            int similarYear = 0;
+            std::string similarTitle = "";
+            int similarIsbn = 0;
 
+            const tinyxml2::XMLElement* elem;
+
+            elem = similarBookElement->FirstChildElement("publication_year");
+            if (elem) elem->QueryIntText(&similarYear);
+            elem = similarBookElement->FirstChildElement("isbn");
+            if (elem) elem->QueryIntText(&similarIsbn);
+            elem = similarBookElement->FirstChildElement("title");
+            if (elem && elem->GetText()) similarTitle = elem->GetText();
+
+            bookNode.getSimilars().addSimilar(SimilarBookNode(similarTitle, similarIsbn, similarYear));
+
+            similarBookElement = similarBookElement->NextSiblingElement("book");
+        }
+    }
     return bookNode;
 }
 
@@ -60,21 +83,29 @@ int main() {
     std::filesystem::path folder = "./books_xml";
 
     for (const auto& input : std::filesystem::directory_iterator(folder)) {
-        std::cout << "=== " << input.path().filename() << " ===\n";
+        // std::cout << "=== " << input.path().filename() << " ===\n";
         tinyxml2::XMLDocument doc;
         tinyxml2::XMLError resultado = doc.LoadFile(input.path().c_str());
         if (resultado != tinyxml2::XML_SUCCESS) {
             std::cerr << "Error al cargar el XML: " << doc.ErrorStr() << "\n";
         return 1;
         }
-        std::cout << "Archivo cargado correctamente\n";
+        // std::cout << "Archivo cargado correctamente\n";
         BookNode bookNode = xmlToBookNode(&doc);
-        bookNode.print();
+        // bookNode.print();
         tree.addBook(bookNode);
     }
 
     // Imprime la cantidad de libros leidos
     std::cout << "Total de libros leidos: " << tree.contarLibros() << "\n";
+
+
+    // tree.listar();
+
+    tree.precursores();
+
+    tree.borrar_ratings(4.5);
+    std::cout << "Libros con rating mayor a 4.5: " << tree.contarLibros() << "\n";
 
     return 0;
 }
