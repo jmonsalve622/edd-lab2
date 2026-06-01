@@ -1,8 +1,6 @@
 #include "tree.h"
 
-Tree::Tree() {
-    // Implementar el constructor para inicializar el árbol
-}
+Tree::Tree() {}
 
 void Tree::addBook(const BookNode& book) {
     root.getBooks().push_back(book);
@@ -25,8 +23,22 @@ void Tree::borrar_ratings(double r) {
     }
 }
 
-void Tree::precursores(int id) {
-    // Implementar la función para listar los precursores de un libro dado su id
+void Tree::precursores() {
+    bool condition = true;
+    int bookYear = 0;
+    for (const auto& book : root.getBooks()) {
+        condition = true;
+        bookYear = book.getYear().getInfo();
+        for (const auto& similar : book.getSimilars().getSimilars()) {
+            if (similar.getYear().getInfo() < bookYear) {
+                condition = false;
+                break;
+            }
+        }
+        if (condition) {
+            std::cout << "ID: " << book.getId().getInfo() << "\n";
+        }
+    }
 }
 
 int Tree::contarLibros() {

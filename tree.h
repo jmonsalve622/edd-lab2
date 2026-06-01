@@ -14,7 +14,7 @@ class Tree {
         void addBook(const BookNode& book);
         void listar();
         void borrar_ratings(double r);
-        void precursores(int id);
+        void precursores();
         int contarLibros(); 
 };
 
