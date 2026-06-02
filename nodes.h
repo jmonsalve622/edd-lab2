@@ -65,7 +65,6 @@ class BookNode {
         const InfoNode<int>& getNumPages() const;
         const SimilarsBooksNode& getSimilars() const;
         SimilarsBooksNode& getSimilars();
-        void print() const;
 };
 
 // Nodo raíz del árbol, que contiene la lista de libros
