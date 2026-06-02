@@ -7,7 +7,6 @@
 #include "tree.h"
 
 BookNode xmlToBookNode(const tinyxml2::XMLDocument* doc) {
-
     // Valores por defecto en caso de que un libro tenga algun valor null
     int id = 0;
     std::string title = "";
@@ -52,10 +51,10 @@ BookNode xmlToBookNode(const tinyxml2::XMLDocument* doc) {
         if (elem && elem->GetText()) description = elem->GetText();
     }
 
+    // Se crea el nodo del libro con los datos extraidos del XML, sin incluir los libros similares, que se agregaran posteriormente
     BookNode bookNode(id, title, isbn, year, language, description, avg_rating, num_pages);
 
     // Se agregan los libros similares al libro principal, en caso de que existan
-    
     if (similarsElement) {
         const tinyxml2::XMLElement* similarBookElement = similarsElement->FirstChildElement("book");
         while (similarBookElement) {
@@ -80,34 +79,27 @@ BookNode xmlToBookNode(const tinyxml2::XMLDocument* doc) {
     return bookNode;
 }
 
-int main() {
+int main(int argc, char** argv) {
+    // Se recorre la carpeta con los archivos XML, se parsean y se agregan al árbol
     Tree tree;
     std::filesystem::path folder = "./books_xml";
 
     for (const auto& input : std::filesystem::directory_iterator(folder)) {
-        // std::cout << "=== " << input.path().filename() << " ===\n";
         tinyxml2::XMLDocument doc;
         tinyxml2::XMLError resultado = doc.LoadFile(input.path().c_str());
         if (resultado != tinyxml2::XML_SUCCESS) {
             std::cerr << "Error al cargar el XML: " << doc.ErrorStr() << "\n";
-        return 1;
+            return 1;
         }
-        // std::cout << "Archivo cargado correctamente\n";
         BookNode bookNode = xmlToBookNode(&doc);
-        // bookNode.print();
         tree.addBook(bookNode);
     }
 
-    // Imprime la cantidad de libros leidos
-    std::cout << "Total de libros leidos: " << tree.contarLibros() << "\n";
-
-
-    // tree.listar();
-
+    // Se listan los libros, se muestran los precursores y se borran los libros con rating menor o igual a 4.5 y se vuelve a listar para mostrar el resultado final
+    tree.listar();
     tree.precursores();
-
     tree.borrar_ratings(4.5);
-    std::cout << "Libros con rating mayor a 4.5: " << tree.contarLibros() << "\n";
-
+    tree.listar();
+    
     return 0;
 }
