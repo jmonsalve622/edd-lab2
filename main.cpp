@@ -6,6 +6,7 @@
 #include "nodes.h"
 #include "tree.h"
 
+// Función para convertir un XMLDocument a un BookNode
 BookNode xmlToBookNode(const tinyxml2::XMLDocument* doc) {
     // Valores por defecto en caso de que un libro tenga algun valor null
     int id = 0;

@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 
+// Nodo genérico para almacenar información de cualquier tipo
 template <typename T>
 class InfoNode {
     private:
@@ -14,6 +15,7 @@ class InfoNode {
         const T& getInfo() const;
 };
 
+// Nodo para almacenar información de un libro similar
 class SimilarBookNode {
     private:
         InfoNode<std::string> title;
@@ -26,6 +28,7 @@ class SimilarBookNode {
         const InfoNode<int>& getYear() const;
 };
 
+// Nodo para almacenar la lista de libros similares de un libro principal
 class SimilarsBooksNode {
     private:
         std::vector<SimilarBookNode> similars;
@@ -36,6 +39,7 @@ class SimilarsBooksNode {
         std::vector<SimilarBookNode>& getSimilars();
 };
 
+// Nodo para almacenar la información de un libro principal, incluyendo su lista de libros similares
 class BookNode {
     private:
         InfoNode<int> id;
@@ -64,6 +68,7 @@ class BookNode {
         void print() const;
 };
 
+// Nodo raíz del árbol, que contiene la lista de libros
 class RootNode {
     private:
         std::vector<BookNode> books;

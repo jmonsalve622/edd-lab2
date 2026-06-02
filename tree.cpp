@@ -1,11 +1,14 @@
 #include "tree.h"
 
+// Constructor por defecto
 Tree::Tree() {}
 
+// Método para agregar un libro al árbol
 void Tree::addBook(const BookNode& book) {
     root.getBooks().push_back(book);
 }
 
+// Método para listar los libros en el árbol
 void Tree::listar() {
     std::cout << "\n=====================================\n";
     std::cout << "        LISTADO DE LIBROS\n";
@@ -18,6 +21,7 @@ void Tree::listar() {
     std::cout << "=====================================\n\n";
 }
 
+// Método para eliminar los libros con rating menor o igual a r
 void Tree::borrar_ratings(double r) {
     std::cout << "\n=====================================\n";
     std::cout << "      ELIMINAR POR RATING\n";
@@ -35,6 +39,7 @@ void Tree::borrar_ratings(double r) {
     std::cout << "=====================================\n\n";
 }
 
+// Método para mostrar los libros precursores
 void Tree::precursores() {
     std::cout << "\n=====================================\n";
     std::cout << "     LIBROS PRECURSORES\n";
@@ -66,6 +71,7 @@ void Tree::precursores() {
     std::cout << "=====================================\n\n";
 }
 
+// Método para contar la cantidad de libros en el árbol
 int Tree::contarLibros() {
     return root.getBooks().size();
 }
