@@ -1,5 +1,9 @@
 # Laboratorio 2 Estructura de Datos
 
+## Participantes
+- ### Joaquín Monsalve Luengo
+- ### Cristóbal Valenzuela Escobar
+
 ## Complilación
 Para compilar el programa, ejecuta el siguiente comando en tu terminal:
 ```bash
